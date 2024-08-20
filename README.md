@@ -1,7 +1,26 @@
 # lafayetteduarte_groundwork
 repo de groundwork para projeto final - descomplicando terraform - turma 2024
 
+# Requisitos
+- Virtualbox + virtualbox aditions instalado na máquina.
+
 
 # Referencias:
 repo com exemplos de packer para libvirt e virtualbox
 [Exemplos](https://github.dev/alvistack/vagrant-ubuntu/blob/master/packer/ubuntu-22.04-virtualbox/packer.json)
+
+# Pegadinhas
+- user-data precisa estar OK para o funcionamento correto.
+  veja https://canonical-subiquity.readthedocs-hosted.com/en/latest/reference/autoinstall-reference.html para mais info.
+  OBS importante: Auto install do ubuntu != cloudinit.. não faça como yours trully e morra de raiva..
+
+
+
+# Variaveis de Ambiente
+ IMAGE_PATH - path to save the built images
+ SSH_DEFAULT_KEY (TODO) - default ssh key
+ IMAGE_VERSION - version of the image - if not provided, current UTC time will be used as a default value
+
+
+# TODOS
+- redner user-data with a template

@@ -9,22 +9,24 @@ packer {
 
 source "virtualbox-iso" "baseos" {
   boot_wait              = "1s"
-  cpus                   = 2
-  memory                 = 2048
+  cpus                   = "${var.num_cpus}"
+  memory                 = "${var.memory_size}"
   gfx_vram_size          = 128
   gfx_accelerate_3d      = true
   guest_additions_mode   = "upload"
   guest_os_type          = "Ubuntu_64"
   headless               = false
   http_directory         = "./"
-  iso_url                = "http://releases.ubuntu.com/22.04.4/ubuntu-22.04.4-live-server-amd64.iso"
-  iso_checksum           = "45f873de9f8cb637345d6e66a583762730bbea30277ef7b32c9c3bd6700a32b2"
+  iso_url                = "${var.iso_info.url}"
+  iso_checksum           = "${var.iso_info.checksum}"
   ssh_username           = "packer"
   ssh_password           = "packer"
   ssh_read_write_timeout = "600s"
   #ssh_port               = 22
   ssh_timeout      = "120m"
   shutdown_command = "echo 'packer' | sudo -S shutdown -P now"
+  vm_name          = "baseOS-v${var.baseos_version}"
+  output_directory = "${var.image_path}"
   vboxmanage = [
     ["modifyvm", "{{.Name}}", "--cpu-profile", "host"],
     ["modifyvm", "{{.Name}}", "--nested-hw-virt", "on"],
