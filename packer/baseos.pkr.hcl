@@ -10,40 +10,27 @@ packer {
 source "virtualbox-iso" "baseos" {
   boot_wait              = "1s"
   cpus                   = 2
+  memory                 = 2048
+  gfx_vram_size          = 128
+  gfx_accelerate_3d      = true
   guest_additions_mode   = "upload"
   guest_os_type          = "Ubuntu_64"
-  headless               = true
+  headless               = false
   http_directory         = "./"
   iso_url                = "http://releases.ubuntu.com/22.04.4/ubuntu-22.04.4-live-server-amd64.iso"
   iso_checksum           = "45f873de9f8cb637345d6e66a583762730bbea30277ef7b32c9c3bd6700a32b2"
   ssh_username           = "packer"
   ssh_password           = "packer"
   ssh_read_write_timeout = "600s"
-  ssh_timeout            = "120m"
-  shutdown_command       = "echo 'packer' | sudo -S shutdown -P now"
+  #ssh_port               = 22
+  ssh_timeout      = "120m"
+  shutdown_command = "echo 'packer' | sudo -S shutdown -P now"
   vboxmanage = [
-    [
-      "modifyvm",
-      "{{.Name}}",
-      "--cpu-profile",
-      "host"
-    ],
-    [
-      "modifyvm",
-      "{{.Name}}",
-      "--nested-hw-virt",
-      "on"
-    ],
-    [
-      "modifyvm",
-      "{{.Name}}",
-      "--nat-localhostreachable1",
-      "on"
-    ]
+    ["modifyvm", "{{.Name}}", "--cpu-profile", "host"],
+    ["modifyvm", "{{.Name}}", "--nested-hw-virt", "on"],
+    ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
+    ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"]
   ]
-  vrdp_bind_address = "0.0.0.0"
-  vrdp_port_max     = 6000
-  vrdp_port_min     = 5900
   boot_command = [
     "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
     "<tab><tab><tab><tab><tab><tab><tab><tab><tab><tab><wait>",
@@ -83,22 +70,6 @@ build {
       "sudo umount /mnt"
     ]
   }
-
-  post-processor "shell-local" {
-    inline = [
-      "set -eu",
-      "export _IMAGE=\"$(ls -1d output-virtualbox-iso/packer-virtualbox-iso-*.vmdk)\"",
-      "sudo qemu-img convert -f vmdk -O qcow2 \"$_IMAGE\" \"$_IMAGE.convert\"",
-      "sudo rm -rf \"$_IMAGE\"",
-      "sudo chmod a+r /boot/vmlinuz*",
-      "sudo virt-customize --no-network -a \"$_IMAGE.convert\" --delete \"/var/lib/*/random-seed\" --delete \"/var/lib/wicked/*\" --firstboot-command \"/usr/local/bin/virt-sysprep-firstboot.sh\"",
-      "sudo virt-sysprep --operations defaults,-ssh-userdir,-customize -a \"$_IMAGE.convert\"",
-      "sudo virt-sparsify --in-place \"$_IMAGE.convert\"",
-      "sudo qemu-img convert -f qcow2 -O vmdk \"$_IMAGE.convert\" \"$_IMAGE\"",
-      "sudo rm -rf \"$_IMAGE.convert\""
-    ]
-  }
-
 }
 
 
