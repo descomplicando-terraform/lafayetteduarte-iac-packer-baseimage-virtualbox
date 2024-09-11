@@ -1,0 +1,6 @@
+---
+roles:
+  - name: packages
+    src: https://github.com/descomplicando-terraform/lafayetteduarte-iac-role-packages.git
+    version: "v1.0.2"
+    scm: git

@@ -25,8 +25,8 @@ source "virtualbox-iso" "baseos" {
   #ssh_port               = 22
   ssh_timeout      = "120m"
   shutdown_command = "echo 'packer' | sudo -S shutdown -P now"
-  vm_name          = "baseOS-v${var.baseos_version}"
-  output_directory = "${var.image_path}"
+  vm_name          = "${var.image_name}-v${var.image_version}"
+  output_directory = "${var.image_path}/${var.image_name}/v${var.image_version}"
   vboxmanage = [
     ["modifyvm", "{{.Name}}", "--cpu-profile", "host"],
     ["modifyvm", "{{.Name}}", "--nested-hw-virt", "on"],
@@ -72,6 +72,18 @@ build {
       "sudo umount /mnt"
     ]
   }
+  provisioner "ansible" {
+    galaxy_file          = "./ansible/requirements.yml"
+    galaxy_force_install = true
+
+    playbook_file    = "./ansible/playbook.yml"
+    ansible_env_vars = [
+      "ANSIBLE_REMOTE_TMP=/tmp/.ansible/tmp",
+      "ANSIBLE_CONFIG=ansible/ansible.cfg",
+     ]
+    roles_path       = "./ansible/roles"
+    user = var.user
+
+    #extra_arguments = ["-vvvv"]
+  }
 }
-
-

@@ -1,0 +1,28 @@
+---
+- name: "Get APT Version"
+  ansible.builtin.shell:
+    cmd: apt-get -v | head -1 | awk '{print $2}' | sed -rn 's/\.//gIp'
+  register: apt_version
+
+- name: "Installing Repository Keys apt legado"
+  ansible.builtin.apt_key:
+    url: "{{ item.apt_key_url }}"
+    state: present
+  loop: "{{ packages.apt_repos }}"
+  when: apt_version.stdout | int <= 110 and item.apt_key_url is defined and item.apt_key_url | length > 0
+
+- name: "Installing Repository Keys - GPG"
+  ansible.builtin.get_url:
+    url: "{{ item.apt_key_url }}"
+    dest: "/etc/apt/trusted.gpg.d/{{item.name}}.asc"
+    mode: 0644
+    force: true
+  loop: "{{ packages.apt_repos }}"
+  when: apt_version.stdout | int > 110 and item.apt_key_url is defined and item.apt_key_url | length > 0
+
+- name: Installing repositories
+  ansible.builtin.apt_repository:
+    repo: "{{ item.repo }}"
+    state: present
+    update_cache: true
+  loop: "{{ packages.apt_repos }}"

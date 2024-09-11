@@ -5,9 +5,21 @@ variable "packer_hashed_password" {
   sensitive = true
 }
 
-variable "baseos_version" {
+variable "user" {
+  type        = string
+  description = "Usuário default"
+  default     = "packer"
+}
+
+variable "image_version" {
   type    = string
   default = env("IMAGE_VERSION") != "" ? env("IMAGE_VERSION")  : "1"
+}
+
+
+variable "image_name" {
+  type    = string
+  default = env("IMAGE_NAME") != "" ? env("IMAGE_NAME") : "baseOS"
 }
 
 variable "image_path" {
