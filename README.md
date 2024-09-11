@@ -4,6 +4,41 @@ repo de groundwork para projeto final - descomplicando terraform - turma 2024
 # Requisitos
 - Virtualbox + virtualbox aditions instalado na máquina.
 
+# Executando o build da imagem
+
+Defina o caminho base onde as imagens devem ser salvas.
+preencha a variavel de ambiente e execute o build.
+ex:
+
+```BASH
+BASE_IMAGE_PATH=~/image-path/images packer build .
+```
+
+# Ansible roles.
+
+## packages
+Role que instala repositorios e pacotes.
+
+ex completo:
+
+```YAML
+ packages:
+   apt_repos:
+     - name: Hashicorp
+       apt_key_url: https://apt.releases.hashicorp.com/gpg
+       repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_facts['lsb']['codename']  }} main"
+   apt_packages:
+   - python-netaddr
+   - python3-pip
+   - "vault=1.12.1-1"
+   pinned_apt_packages:
+   - vault
+   pip_packages:
+   - netaddr
+   deb_packages:
+     - "http://archive.ubuntu.com/ubuntu/pool/universe/c/cowsay/cowsay_3.03+dfsg2-8_all.deb"
+     - "/tmp/av/pacote.deb"
+```
 
 # Referencias:
 repo com exemplos de packer para libvirt e virtualbox

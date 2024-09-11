@@ -13,7 +13,7 @@ variable "user" {
 
 variable "image_version" {
   type    = string
-  default = env("IMAGE_VERSION") != "" ? env("IMAGE_VERSION")  : "1"
+  default = env("IMAGE_VERSION") != "" ? env("IMAGE_VERSION") : "1"
 }
 
 
