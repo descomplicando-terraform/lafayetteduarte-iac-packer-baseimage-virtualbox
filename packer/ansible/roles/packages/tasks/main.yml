@@ -1,0 +1,22 @@
+---
+- name: "Ensuring time sync"
+  ansible.builtin.service:
+    name: "{{ datetime_service }}"
+    state: restarted
+  when: (restart_time_sync is defined) and (restart_time_sync | bool)
+
+- name: Instalando Repositorios e Chaves
+  ansible.builtin.import_tasks: apt-repos.yml
+  when: (packages.apt_repos is defined)
+
+- name: APT Packages
+  ansible.builtin.import_tasks: apt-packages.yml
+  when: packages.apt_packages is defined
+
+- name: Deb Packages
+  ansible.builtin.import_tasks: deb-packages.yml
+  when: packages.deb_packages is defined
+
+- name: Python Packages
+  ansible.builtin.import_tasks: pip-packages.yml
+  when: packages.pip_packages is defined

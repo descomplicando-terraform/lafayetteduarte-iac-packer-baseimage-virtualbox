@@ -1,0 +1,72 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US.UTF-8
+  timezone: geoip
+  refresh-installer:
+      update: true
+  keyboard:
+      layout: br
+  network:
+    network:
+      version: 2
+      ethernets:
+        eth0:
+          dhcp4: true
+        enp0s3:
+          dhcp4: true
+
+  storage:
+      swap:
+          size: 0
+      config:
+          - { type: disk, id: disk-0, ptable: gpt, wipe: superblock-recursive, grub_device: true }
+          - { type: partition, id: partition-0, number: 1, device: disk-0, size: 1M, wipe: superblock, flag: bios_grub }
+          - { type: partition, id: partition-1, number: 2, device: disk-0, size: 8192M, wipe: superblock, flag: boot }
+          - { type: partition, id: partition-2, number: 3, device: disk-0, size: 8192M, wipe: superblock, flag: swap }
+          - { type: partition, id: partition-3, number: 4, device: disk-0, size: -1, wipe: superblock }
+          - { type: format, id: format-0, volume: partition-1, fstype: ext4 }
+          - { type: format, id: format-1, volume: partition-2, fstype: swap }
+          - { type: format, id: format-2, volume: partition-3, fstype: ext4 }
+          - { type: mount, id: mount-0, device: format-0, path: /boot }
+          - { type: mount, id: mount-1, device: format-1, path: none }
+          - { type: mount, id: mount-2, device: format-2, path: / }
+  identity:
+      username: root
+      hostname: ubuntu
+      password: "$6$J8it19DNqY2kese7$v46eeBJUGjEGIQjbuiug25acj549SbekMGHrUPV0P2Y9Gbap6Q.j.V1EkaWy2vdYsGAzsLDV.U0QiNCdVvj4/."
+  ssh:
+      install-server: yes
+      authorized-keys: []
+      allow-pw: yes
+  user-data:
+    disable_root: false
+    users:
+      - name: packer
+        shell: /bin/bash
+        lock_passwd: false
+        passwd: "$6$J8it19DNqY2kese7$v46eeBJUGjEGIQjbuiug25acj549SbekMGHrUPV0P2Y9Gbap6Q.j.V1EkaWy2vdYsGAzsLDV.U0QiNCdVvj4/."
+        groups: sudo
+        sudo: ALL=(ALL) NOPASSWD:ALL
+
+  packages:
+      - ca-certificates
+      - cloud-guest-utils
+      - cloud-init
+      - curl
+      - e2fsprogs
+      - iproute2
+      - perl
+      - python3
+      - rsync
+      - sudo
+      - ansible
+      - openssh-server
+    #   - docker-ce
+    #   - docker-ce-cli
+    #   - docker-compose
+    #   - containerd.io
+  # early-commands:
+  #   - systemctl stop ssh.service
+  # late-commands:
+  #   - systemctl start ssh.service

@@ -1,0 +1,14 @@
+---
+- name: Install base repos and packages
+  hosts: all
+  remote_user: packer
+  become: true
+
+  roles:
+    - role: packages
+      vars:
+        packages:
+          apt_packages:
+            - python3
+            - python-pip
+            - ansible

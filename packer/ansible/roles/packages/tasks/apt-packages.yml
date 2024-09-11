@@ -1,0 +1,17 @@
+---
+- name: Installing APT Packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+    force: true
+    force_apt_get: true
+  loop: "{{ packages.apt_packages }}"
+  when: packages.apt_packages is defined
+
+- name: Pin apt packages
+  ansible.builtin.dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop: "{{ packages.pinned_apt_packages }}"
+  when: packages.pinned_apt_packages is defined
