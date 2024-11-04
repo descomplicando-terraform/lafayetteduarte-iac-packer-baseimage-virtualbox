@@ -8,6 +8,8 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+env:
+  vVIRTUALBOX_VERSION: "7.0.18"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,9 +34,23 @@ jobs:
         uses: alex-oleshkevich/setup-ansible@v1.0.1 
         with:
           version: "9.3.0"
-  
       - name: "Print Ansible version"
         run: ansible-playbook --version
+
+      - name: "Virtualbox - deps"
+        run: "sudo apt install software-properties-common"
+
+      - name: "Virtualbox - Install Oracle GPG Key"
+        run: "wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -"
+
+      - name: "Virtualbox - Install Repo"
+        run: "echo \"deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(lsb_release -cs) contrib\" | sudo tee /etc/apt/sources.list.d/virtualbox.list"
+
+      - name: "Virtualbox - update"
+        run: "sudo apt update"
+      - name: "Virtualbox - Install Virtualbox"
+        run: "sudo apt install virtualbox-${{ env.VIRTUALBOX_VERSION }}"
+
 
       - name: Run packer init
         working-directory: "./packer"
