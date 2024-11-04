@@ -28,6 +28,14 @@ jobs:
         with:
           # The Packer version to install and add to PATH.
           version: latest
+      - name: "Install Ansible"
+        uses: alex-oleshkevich/setup-ansible@v1.0.1 
+        with:
+          version: "9.3.0"
+  
+      - name: "Print Ansible version"
+        run: ansible-playbook --version
+
       - name: Run packer init
         working-directory: "./packer"
         run: "packer init ."
