@@ -11,6 +11,7 @@ on:
 env:
   VIRTUALBOX_VERSION: "7.1"
   VIRTUALBOX_EXT_PACK_VERSION: "7.0.18"
+  VIRTUALBOX_EXT_PACK_LICID: "33d7284dc4a0ece381196fda3cfe2ed0e1e8e7ed7f27b9a9ebc4ee22e24bd23c"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -56,7 +57,7 @@ jobs:
         run: wget https://download.virtualbox.org/virtualbox/7.0.18/Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack
 
       - name: "Virtualbox - Install Extension Pack"
-        run: echo "y" | sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack
+        run: sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
 
       #Packer 
       - name: "Ensure Image dir"
