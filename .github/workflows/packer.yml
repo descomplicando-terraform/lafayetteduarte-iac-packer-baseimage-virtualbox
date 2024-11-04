@@ -29,8 +29,10 @@ jobs:
           # The Packer version to install and add to PATH.
           version: latest
       - name: Run packer init
+        working-directory: "./packer"
         run: "packer init ."
       - name: Run packer validate
+        working-directory: "./packer"
         run: "packer validate ."
       
           
