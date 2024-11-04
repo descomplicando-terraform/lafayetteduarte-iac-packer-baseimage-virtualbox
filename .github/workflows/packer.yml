@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 env:
   VIRTUALBOX_VERSION: "7.1"
+  VIRTUALBOX_EXT_PACK_VERSION: "7.0.18"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -51,12 +52,25 @@ jobs:
       - name: "Virtualbox - Install Virtualbox"
         run: sudo apt install virtualbox-${{ env.VIRTUALBOX_VERSION }}
 
+      - name: "Virtualbox - Download Extension pack"
+        run: wget https://download.virtualbox.org/virtualbox/7.0.18/Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack
 
+      - name: "Virtualbox - Install Extension Pack"
+        run: sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack -y
+
+      #Packer 
+      - name: "Ensure Image dir"
+        run: mkdir -p final-image
+      
       - name: Run packer init
         working-directory: "./packer"
         run: "packer init ."
       - name: Run packer validate
         working-directory: "./packer"
         run: "packer validate ."
+      - name: "Packer build ."
+        run: "packer build ."
+        env:
+          BASE_IMAGE_PATH: ".final-image"
       
           
