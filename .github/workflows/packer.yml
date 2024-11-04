@@ -49,7 +49,7 @@ jobs:
       - name: "Virtualbox - update"
         run: "sudo apt update"
       - name: "Virtualbox - Install Virtualbox"
-        run: "sudo apt install virtualbox-$VIRTUALBOX_VERSION"
+        run: sudo apt install virtualbox-${{ env.VIRTUALBOX_VERSION }}
 
 
       - name: Run packer init
