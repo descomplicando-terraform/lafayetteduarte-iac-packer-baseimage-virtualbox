@@ -60,7 +60,7 @@ jobs:
         run: sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
 
       - name: "Virtualbox - download Guest aditions"
-        run: wget -p /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_EXT_PACK_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.iso
+        run: sudo wget -P /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_EXT_PACK_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.iso
       #Packer 
       - name: "Ensure Image dir"
         run: mkdir -p final-image
