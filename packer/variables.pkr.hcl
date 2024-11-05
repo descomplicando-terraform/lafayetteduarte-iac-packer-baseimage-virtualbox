@@ -19,7 +19,7 @@ variable "image_version" {
 
 variable "image_name" {
   type    = string
-  default = env("IMAGE_NAME") != "" ? env("IMAGE_NAME") : "baseOS"
+  default = env("IMAGE_NAME") != "" ? env("IMAGE_NAME") : "BaseImage"
 }
 
 variable "image_path" {
