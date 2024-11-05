@@ -92,10 +92,10 @@ jobs:
         working-directory: "./packer"
         run: "sudo packer build ."
         env:
-          PKR_VAR_IMAGE_PATH: "final-image"
-          PKR_VAR_VIRTUALBOX_MINOR_VERSION: ${{ env.VIRTUALBOX_MINOR_VERSION }}
-          PKR_VAR_IMAGE_NAME: ${{ env.IMG_NAME }}
-          PKR_VAR_IMAGE_VERSION: ${{ env.IMG_VERSION }}
+          PKR_VAR_image_path: "final-image"
+          PKR_VAR_virtualbox_minor_version: ${{ env.VIRTUALBOX_MINOR_VERSION }}
+          PKR_VAR_image_name: ${{ env.IMG_NAME }}
+          PKR_VAR_image_version: ${{ env.IMG_VERSION }}
           PACKER_LOG: 1
       - name: Archive production artifacts
         uses: actions/upload-artifact@v4
