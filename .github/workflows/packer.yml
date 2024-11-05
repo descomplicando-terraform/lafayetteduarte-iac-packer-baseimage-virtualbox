@@ -101,5 +101,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.IMG_NAME }}_${{ env.IMG_VERSION }}
-          path: final-image/${{ env.IMG_NAME }}/${{ env.IMG_VERSION }}/**
+          path: final-image/${{ env.IMG_NAME }}/${{ env.IMG_VERSION }}/
           
