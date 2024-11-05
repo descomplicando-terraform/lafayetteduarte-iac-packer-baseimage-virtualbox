@@ -17,7 +17,6 @@ source "virtualbox-iso" "baseos" {
   memory                 = "${var.memory_size}"
   gfx_vram_size          = 128
   gfx_accelerate_3d      = true
-  guest_additions_mode   = "upload"
   guest_os_type          = "Ubuntu_64"
   headless               = false
   http_directory         = "./"
