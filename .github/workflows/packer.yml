@@ -58,7 +58,7 @@ jobs:
         run: wget https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack
 
       - name: "Virtualbox - Install Extension Pack"
-        run: sudo VBoxManage extpack install Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
+        run: echo "y" | sudo VBoxManage extpack install Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack #--accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
 
       # - name: "Virtualbox - download Guest aditions"
       #   run: sudo wget -P /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_MINOR_VERSION }}.iso
