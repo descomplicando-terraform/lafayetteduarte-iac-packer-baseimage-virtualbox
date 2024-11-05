@@ -38,6 +38,12 @@ variable "iso_info" {
   }
 }
 
+
+variable "virtualbox_minor_version" {
+  type    = string
+  default = env("VIRTUALBOX_MINOR_VERSION") != "" ? env("VIRTUALBOX_MINOR_VERSION") : "7.1.14"
+}
+
 variable num_cpus {
   type    = number
   default = 2
