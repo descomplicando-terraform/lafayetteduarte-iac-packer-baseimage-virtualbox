@@ -100,9 +100,9 @@ jobs:
       - name: "Copy file to temp path"
         working-directory: "./packer"
         run: | 
-          ls -lha final-image
-          stat final-image
-          lsof
+         sudo chown -R runner:runner final-image
+         ls -lha final-image/${{ env.IMG_NAME }}/${{ env.IMG_VERSION }}/
+          
           
 
       - name: Archive production artifacts
