@@ -9,6 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 env:
+  ANSIBLE_VERSION: "9.3.0"
   VIRTUALBOX_VERSION: "7.1"
   VIRTUALBOX_MINOR_VERSION: "7.1.4"
   VIRTUALBOX_EXT_PACK_LICID: "eb31505e56e9b4d0fbca139104da41ac6f6b98f8e78968bdf01b1f3da3c4f9ae"
@@ -32,12 +33,22 @@ jobs:
         with:
           # The Packer version to install and add to PATH.
           version: latest
-      - name: "Install Ansible"
-        uses: alex-oleshkevich/setup-ansible@v1.0.1 
+
+      - name: "Install Python"
+        uses: actions/setup-python@v4
         with:
-          version: "9.3.0"
-      - name: "Print Ansible version"
-        run: ansible-playbook --version
+            python-version: "3.12"
+
+      - name: "Cache python packages"
+        uses: actions/cache@v4
+        with:
+            path: ~/.cache/pip
+            key: ${{ runner.os }}-${{ env.ANSIBLE_VERSION }}
+
+      - name: "Install packages"
+        shell: bash
+        run: |
+            sudo python -m pip install ansible==${{ env.ANSIBLE_VERSION}}          
 
       - name: "Virtualbox - deps"
         run: "sudo apt install software-properties-common"
@@ -68,14 +79,15 @@ jobs:
       
       - name: Run packer init
         working-directory: "./packer"
-        run: "packer init ."
+        run: "sudo packer init ."
+        
       - name: Run packer validate
         working-directory: "./packer"
-        run: "packer validate ."
+        run: "sudo packer validate ."
 
       - name: "Packer build ."
         working-directory: "./packer"
-        run: "packer build ."
+        run: "sudo packer build ."
         env:
           BASE_IMAGE_PATH: ".final-image"
           VIRTUALBOX_MINOR_VERSION: ${{ env.VIRTUALBOX_MINOR_VERSION }}
