@@ -9,6 +9,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 env:
+  VIRTUALBOX_MAJOR_VERSION: "7.1"
   VIRTUALBOX_VERSION: "7.1.14"
   VIRTUALBOX_EXT_PACK_LICID: "33d7284dc4a0ece381196fda3cfe2ed0e1e8e7ed7f27b9a9ebc4ee22e24bd23c"
 
@@ -51,7 +52,7 @@ jobs:
         run: "sudo apt update"
 
       - name: "Virtualbox - Install Virtualbox"
-        run: sudo apt install virtualbox-${{ env.VIRTUALBOX_VERSION }}
+        run: sudo apt install virtualbox-${{ env.VIRTUALBOX_MAJOR_VERSION }}
 
       - name: "Virtualbox - Download Extension pack"
         run: wget https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_VERSION }}/Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_VERSION }}.vbox-extpack
