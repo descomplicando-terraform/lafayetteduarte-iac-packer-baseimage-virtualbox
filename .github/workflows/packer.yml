@@ -53,12 +53,17 @@ jobs:
       - name: "Virtualbox - Install Virtualbox"
         run: sudo apt install virtualbox-${{ env.VIRTUALBOX_VERSION }}
 
+      - name: "Virtualbox - Install Virtualbox Guest aditions"
+        run: sudo apt install -y virtualbox-guest-additions-iso        
+
       - name: "Virtualbox - Download Extension pack"
         run: wget https://download.virtualbox.org/virtualbox/7.0.18/Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack
 
       - name: "Virtualbox - Install Extension Pack"
         run: sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_EXT_PACK_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
 
+      - name: "Virtualbox - download Guest aditions"
+        run: wget 
       #Packer 
       - name: "Ensure Image dir"
         run: mkdir -p final-image
