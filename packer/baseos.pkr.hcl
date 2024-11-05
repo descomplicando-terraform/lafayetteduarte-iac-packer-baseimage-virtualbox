@@ -35,7 +35,6 @@ source "virtualbox-iso" "baseos" {
   vboxmanage = [
     ["modifyvm", "{{.Name}}", "--cpu-profile", "host"],
     ["modifyvm", "{{.Name}}", "--nested-hw-virt", "on"],
-    ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
     ["modifyvm", "{{.Name}}", "--nat-localhostreachable1", "on"]
   ]
   boot_command = [
