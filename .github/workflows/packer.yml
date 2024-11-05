@@ -69,7 +69,9 @@ jobs:
       - name: Run packer validate
         working-directory: "./packer"
         run: "packer validate ."
+
       - name: "Packer build ."
+        working-directory: "./packer"
         run: "packer build ."
         env:
           BASE_IMAGE_PATH: ".final-image"
