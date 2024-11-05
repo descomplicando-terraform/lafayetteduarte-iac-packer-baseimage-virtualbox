@@ -92,7 +92,7 @@ jobs:
         working-directory: "./packer"
         run: "sudo packer build ."
         env:
-          BASE_IMAGE_PATH: ".final-image"
+          IMAGE_PATH: "final-image"
           VIRTUALBOX_MINOR_VERSION: ${{ env.VIRTUALBOX_MINOR_VERSION }}
           IMAGE_NAME: ${{ env.IMAGE_NAME }}
           IMAGE_VERSION: ${{ env.IMAGE_VERSION }}
@@ -101,5 +101,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_VERSION }}
-          path: ../images/**
+          path: final-image/**
           
