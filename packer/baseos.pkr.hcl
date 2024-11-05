@@ -62,18 +62,19 @@ build {
   sources = ["sources.virtualbox-iso.baseos"]
 
   # TODO: Substituir por um provisionador ansible...
-  provisioner "shell" {
-    inline = [
-      "set -eu",
-      "sudo apt update",
-      "sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
-      "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo",
-      "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential dkms",
-      "sudo mount -o loop VBoxGuestAdditions.iso /mnt",
-      "(echo 'y' | sudo sh /mnt/VBoxLinuxAdditions.run) || echo $?",
-      "sudo umount /mnt"
-    ]
-  }
+  #Removendo temporariamente pq o packer nao consegue baixar os Additions. dont ask me why..
+  # provisioner "shell" {
+  #   inline = [
+  #     "set -eu",
+  #     "sudo apt update",
+  #     "sudo DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y",
+  #     "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y ca-certificates curl gcc hostname iproute2 language-pack-en locales python3 sudo",
+  #     "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y build-essential dkms",
+  #     "sudo mount -o loop VBoxGuestAdditions.iso /mnt",
+  #     "(echo 'y' | sudo sh /mnt/VBoxLinuxAdditions.run) || echo $?",
+  #     "sudo umount /mnt"
+  #   ]
+  # }
   provisioner "ansible" {
     galaxy_file          = "./ansible/requirements.yml"
     galaxy_force_install = true
