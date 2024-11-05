@@ -55,13 +55,13 @@ jobs:
         run: sudo apt install virtualbox-${{ env.VIRTUALBOX_VERSION }}
 
       - name: "Virtualbox - Download Extension pack"
-        run: wget https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack
+        run: wget https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack
 
       - name: "Virtualbox - Install Extension Pack"
-        run: sudo VBoxManage extpack install Oracle_VM_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
+        run: sudo VBoxManage extpack install Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
 
-      - name: "Virtualbox - download Guest aditions"
-        run: sudo wget -P /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_MINOR_VERSION }}.iso
+      # - name: "Virtualbox - download Guest aditions"
+      #   run: sudo wget -P /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_MINOR_VERSION }}.iso
       #Packer 
       - name: "Ensure Image dir"
         run: mkdir -p final-image
