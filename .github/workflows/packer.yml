@@ -9,6 +9,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 env:
+  IMG_NAME: "BaseImage"
+  #TODO: Extrair isso aqui da versao semantica
+  IMG_VERSION: "v1"
   ANSIBLE_VERSION: "9.3.0"
   VIRTUALBOX_VERSION: "7.1"
   VIRTUALBOX_MINOR_VERSION: "7.1.4"
@@ -80,7 +83,7 @@ jobs:
       - name: Run packer init
         working-directory: "./packer"
         run: "sudo packer init ."
-        
+
       - name: Run packer validate
         working-directory: "./packer"
         run: "sudo packer validate ."
@@ -91,6 +94,12 @@ jobs:
         env:
           BASE_IMAGE_PATH: ".final-image"
           VIRTUALBOX_MINOR_VERSION: ${{ env.VIRTUALBOX_MINOR_VERSION }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+          IMAGE_VERSION: ${{ env.IMAGE_VERSION }}
           PACKER_LOG: 1
-      
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.IMAGE_NAME }}_${{ env.IMAGE_VERSION }}
+          path: ../images/**
           
