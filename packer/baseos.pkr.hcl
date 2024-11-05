@@ -15,8 +15,6 @@ source "virtualbox-iso" "baseos" {
   boot_wait              = "1s"
   cpus                   = "${var.num_cpus}"
   memory                 = "${var.memory_size}"
-  gfx_vram_size          = 128
-  gfx_accelerate_3d      = true
   guest_os_type          = "Ubuntu_64"
   headless               = true
   http_directory         = "./"
