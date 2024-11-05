@@ -24,7 +24,7 @@ variable "image_name" {
 
 variable "image_path" {
   type    = string
-  default = env("IMAGE_PATH") != "" ? env("IMAGE_PATH") : "../images"
+  default = env("IMAGE_PATH") != "" ? env("IMAGE_PATH") : "final-image"
 }
 
 variable "iso_info" {
