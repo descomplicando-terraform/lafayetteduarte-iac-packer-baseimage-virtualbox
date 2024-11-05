@@ -18,7 +18,7 @@ source "virtualbox-iso" "baseos" {
   gfx_vram_size          = 128
   gfx_accelerate_3d      = true
   guest_os_type          = "Ubuntu_64"
-  headless               = false
+  headless               = true
   http_directory         = "./"
   iso_url                = "${var.iso_info.url}"
   iso_checksum           = "${var.iso_info.checksum}"
