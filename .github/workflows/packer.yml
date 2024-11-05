@@ -79,5 +79,6 @@ jobs:
         env:
           BASE_IMAGE_PATH: ".final-image"
           VIRTUALBOX_MINOR_VERSION: ${{ env.VIRTUALBOX_MINOR_VERSION }}
+          PACKER_LOG: 1
       
           
