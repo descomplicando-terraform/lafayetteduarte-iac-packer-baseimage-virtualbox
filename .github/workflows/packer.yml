@@ -101,6 +101,7 @@ jobs:
         working-directory: "./packer"
         run: | 
           ls -lha final-image
+          stat final-image
           lsof
           
 
