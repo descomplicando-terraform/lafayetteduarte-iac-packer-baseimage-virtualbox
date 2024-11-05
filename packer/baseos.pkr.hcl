@@ -31,6 +31,7 @@ source "virtualbox-iso" "baseos" {
   shutdown_command = "echo 'packer' | sudo -S shutdown -P now"
   vm_name          = "${var.image_name}-v${var.image_version}"
   output_directory = "${var.image_path}/${var.image_name}/v${var.image_version}"
+  guest_additions_mode = "disable"
   guest_additions_url = "https://download.virtualbox.org/virtualbox/${var.virtualbox_minor_version}/VBoxGuestAdditions_${var.virtualbox_minor_version}.iso"
   vboxmanage = [
     ["modifyvm", "{{.Name}}", "--cpu-profile", "host"],
