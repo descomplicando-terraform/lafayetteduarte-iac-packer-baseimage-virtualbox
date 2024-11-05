@@ -11,7 +11,7 @@ on:
 env:
   VIRTUALBOX_VERSION: "7.1"
   VIRTUALBOX_MINOR_VERSION: "7.1.4"
-  VIRTUALBOX_EXT_PACK_LICID: "9dd60ef3c52c2a318fbbb6faace5862a299b61f678a579988869865dcf7390b6"
+  VIRTUALBOX_EXT_PACK_LICID: "eb31505e56e9b4d0fbca139104da41ac6f6b98f8e78968bdf01b1f3da3c4f9ae"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -58,10 +58,10 @@ jobs:
         run: wget https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack
 
       - name: "Virtualbox - Install Extension Pack"
-        run: echo "y" | sudo VBoxManage extpack install Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack #--accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
+        run: sudo VBoxManage extpack install Oracle_VirtualBox_Extension_Pack-${{ env.VIRTUALBOX_MINOR_VERSION }}.vbox-extpack --accept-license=${{ env.VIRTUALBOX_EXT_PACK_LICID }}
 
-      # - name: "Virtualbox - download Guest aditions"
-      #   run: sudo wget -P /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_MINOR_VERSION }}.iso
+      - name: "Virtualbox - download Guest aditions"
+        run: sudo wget -P /opt/VirtualBox https://download.virtualbox.org/virtualbox/${{ env.VIRTUALBOX_MINOR_VERSION }}/VBoxGuestAdditions_${{ env.VIRTUALBOX_MINOR_VERSION }}.iso
       #Packer 
       - name: "Ensure Image dir"
         run: mkdir -p final-image
